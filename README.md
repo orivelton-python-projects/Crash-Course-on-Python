@@ -3,5 +3,5 @@ Crash Course on Python
 
 - orivelton
 
-Chaoter 0
-Chaoter 1
+Chapter 0
+Chapter 1
