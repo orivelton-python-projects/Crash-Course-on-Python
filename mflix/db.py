@@ -19,7 +19,6 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from pymongo.read_concern import ReadConcern
 
-
 def get_db():
     """
     Configuration method to return db instance
@@ -78,7 +77,7 @@ def get_movies_by_country(countries):
         # Find movies matching the "countries" list, but only return the title
         # and _id. Do not include a limit in your own implementation, it is
         # included here to avoid sending 46000 documents down the wire.
-        return list(db.movies.find().limit(1))
+        return list(db.movies.find({"countries": { "$in": countries}}, { "title": 1 }))
 
     except Exception as e:
         return e
@@ -174,6 +173,7 @@ def build_query_sort_project(filters):
     # to display on the front page of MFlix, because they are famous or
     # aesthetically pleasing. When we sort on it, the movies containing this
     # field will be displayed at the top of the page.
+    
     sort = [("tomatoes.viewer.numReviews", DESCENDING), ("_id", ASCENDING)]
     project = None
     if filters:
@@ -192,10 +192,10 @@ def build_query_sort_project(filters):
             Given a genre in the "filters" object, construct a query that
             searches MongoDB for movies with that genre.
             """
-
+            
             # TODO: Text and Subfield Search
             # Construct a query that will search for the chosen genre.
-            query = {}
+            query = {"genres": {"$in": filters["genres"]}}
 
     return query, sort, project
 

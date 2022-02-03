@@ -1,3 +1,6 @@
 .ini
 .cache/
 dotini_win
+.vscode/
+mflix/__pycache__/
+mflix/__pycache__/
